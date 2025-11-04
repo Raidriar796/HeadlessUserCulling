@@ -40,13 +40,36 @@ public partial class HeadlessUserCulling : ResoniteMod
             StringDriver.Format.Value = "Culling Distance: {0}";
             StringDriver.Text.Target = DistanceItemSource.Label;
 
+            // Sets up a list with values that will be put into the context menu
+            // but inserts the default distance from the config in order
+            List<float> DistanceList = new List<float>();
+            DistanceList.Add(float.PositiveInfinity);
+            DistanceList.Add(20F);
+            DistanceList.Add(10F);
+            DistanceList.Add(5F);
+            DistanceList.Add(3F);
+            DistanceList.Add(2F);
+
+            if (!DistanceList.Contains(Config!.GetValue(DefaultDistance)))
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (Config.GetValue(DefaultDistance) < DistanceList[i] &&
+                        Config.GetValue(DefaultDistance) > DistanceList[i + 1])
+                    {
+                        DistanceList.Insert(i + 1, Config.GetValue(DefaultDistance));
+                        break;
+                    }
+                    else DistanceList.Add(Config.GetValue(DefaultDistance));
+                }
+            }
+
             var ButtonCycle = DistanceMenuSlot.AttachComponent<ButtonValueCycle<float>>();
             ButtonCycle.TargetValue.Target = DistVar.Value;
-            ButtonCycle.Values.Add(float.PositiveInfinity);
-            ButtonCycle.Values.Add(20F);
-            ButtonCycle.Values.Add(10F);
-            ButtonCycle.Values.Add(5F);
-            ButtonCycle.Values.Add(2F);
+            for (int i = 0; i < 7; i++)
+            {
+                ButtonCycle.Values.Add(DistanceList[i]);
+            }
         }
 
         // Sets up the context menu to destroy itself when
