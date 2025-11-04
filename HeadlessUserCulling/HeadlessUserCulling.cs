@@ -16,10 +16,7 @@ public partial class HeadlessUserCulling : ResoniteMod
         Config = GetConfiguration();
         Config?.Save(true);
 
-        Engine.Current.RunPostInit(() =>
-        {
-            if (ModLoader.IsHeadless) Engine.Current.WorldManager.WorldAdded += InitializeWorld;
-            else Msg("This mod is intended for headless clients only, please uninstall");
-        });
+        if (ModLoader.IsHeadless) Engine.Current.WorldManager.WorldAdded += InitializeWorld;
+        else Msg("This mod is intended for headless clients only, please uninstall");
     }
 }
