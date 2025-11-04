@@ -106,7 +106,7 @@ public partial class HeadlessUserCulling : ResoniteMod
                 var DistanceDriver = DynVarSlot.AttachComponent<DynamicValueVariableDriver<float>>();
                 DistanceDriver.VariableName.Value = "World/CullingDistance";
                 DistanceDriver.Target.Target = DistanceCheck.Distance;
-                DistanceDriver.DefaultValue.Value = 10.0F;
+                DistanceDriver.DefaultValue.Value = Config!.GetValue(DefaultDistance);
 
                 var UserMuteState = DynVarSlot.AttachComponent<DynamicValueVariable<bool>>();
                 UserMuteState.VariableName.Value = "World/" + user.UserID + "-MuteState";

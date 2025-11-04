@@ -28,7 +28,7 @@ public partial class HeadlessUserCulling : ResoniteMod
                 DistanceDynVar.VariableName.Value = "World/CullingDistance";
 
                 var DistanceOverride = DistanceVarSlot.AttachComponent<ValueUserOverride<float>>();
-                DistanceOverride.Default.Value = 10;
+                DistanceOverride.Default.Value = Config!.GetValue(DefaultDistance);
                 DistanceOverride.CreateOverrideOnWrite.Value = true;
                 DistanceOverride.Target.Target = DistanceDynVar.Value;
 
